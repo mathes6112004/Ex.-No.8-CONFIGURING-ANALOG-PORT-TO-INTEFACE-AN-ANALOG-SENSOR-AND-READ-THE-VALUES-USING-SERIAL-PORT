@@ -150,14 +150,52 @@ This module also includes a potentiometer that will fix the threshold value, & t
 
 
 ##  Program 
+```
+#include "main.h"
+#include"stdio.h"
+uint32_t adcvalue;
+#if defined (__ICCARM__) || defined (__ARMCC_VERSION)
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#elif defined(__GNUC__)
 
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+  MX_ADC1_Init();
+  MX_USART2_UART_Init();
+   while (1)
+  {
+	  HAL_ADC_Start(&hadc1);
+	  			HAL_ADC_PollForConversion(&hadc1,100);
+	  			adcvalue = HAL_ADC_GetValue(&hadc1);
+	  			HAL_ADC_Stop(&hadc1);
+	  			HAL_Delay(500);
+	  			printf("ADC VALUE:%ld\n",adcvalue);
+  }
+  
+}
+PUTCHAR_PROTOTYPE
+{
 
- 
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
+```
+## Output  :
+i)
+![image](https://github.com/mathes6112004/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/119477782/aa6cd7b3-d6d6-47be-acf7-f67c6bc2fbc9)
+ii)
+![image](https://github.com/mathes6112004/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/119477782/c93c79f8-e370-4450-b002-e20a78bdc7d5)
+iii)
+![image](https://github.com/mathes6112004/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/119477782/012ca10c-9424-42ea-9e3d-96d34a1dc05d)
 
 ## Result :
- 
-## Output  :
-
+Thus, the configuring analog port to interface an analog sensor and read the values using serial port is successfully executed.
 
 
 
